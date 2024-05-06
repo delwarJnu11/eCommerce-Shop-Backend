@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const authToken = async (req, res, next) => {
   try {
     const token = req?.cookies?.token;
-    console.log(token);
     if (!token) {
       res.status(401).json({
         message: "Please Login!",
@@ -26,7 +25,7 @@ const authToken = async (req, res, next) => {
       message: "you don't have any access token. please login!",
       error: true,
       success: false,
-      user: [],
+      user: {},
     });
   }
 };

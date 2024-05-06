@@ -17,36 +17,37 @@ const userLoginController = async (req, res) => {
 
     if (!user) {
       throw new Error("user not found!");
-    }
-
-    const checkPassword = bcrypt.compareSync(password, user.password);
-
-    if (checkPassword) {
-      const tokenData = {
-        _id: user._id,
-        email: user.email,
-      };
-      const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
-        expiresIn: "1h",
-      });
-
-      const tokenOptions = {
-        httpOnly: true,
-        secure: true,
-      };
-
-      res.cookie("token", token, tokenOptions).status(200).json({
-        message: "Login successfull",
-        token: token,
-        success: true,
-        error: false,
-      });
     } else {
-      throw new Error("Please check Password");
+      const checkPassword = bcrypt.compareSync(password, user.password);
+
+      if (checkPassword) {
+        const tokenData = {
+          _id: user._id,
+          email: user.email,
+        };
+        const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
+          expiresIn: "1h",
+        });
+
+        const tokenOptions = {
+          httpOnly: true,
+          secure: true,
+        };
+
+        res.cookie("token", token, tokenOptions).status(200).json({
+          message: "Login successfull",
+          token: token,
+          success: true,
+          error: false,
+          data: user,
+        });
+      } else {
+        throw new Error("Please check Password");
+      }
     }
-  } catch (error) {
-    res.status(500).json({
-      message: error.message || "An error occurred during login",
+  } catch (err) {
+    res.json({
+      message: err.message || err,
       success: false,
       error: true,
     });

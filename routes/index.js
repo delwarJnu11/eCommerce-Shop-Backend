@@ -1,11 +1,13 @@
 const express = require("express");
-const userRegisterController = require("../controller/userRegister");
-const userLoginController = require("../controller/userLogin");
+const userLoginController = require("../controller/user/userLogin");
 const authToken = require("../middleware/authToken");
-const userDetailsController = require("../controller/userDetails");
-const userLogoutController = require("../controller/userLogout");
-const getAllUsersController = require("../controller/getAllUsers");
-const updateUserRoleController = require("../controller/updateUserRole");
+const userDetailsController = require("../controller/user/userDetails");
+const userLogoutController = require("../controller/user/userLogout");
+const getAllUsersController = require("../controller/user/getAllUsers");
+const updateUserRoleController = require("../controller/user/updateUserRole");
+const userRegisterController = require("../controller/user/userRegister");
+const uploadProductController = require("../controller/product/uploadProduct");
+const getAllProductsController = require("../controller/product/getAllProducts");
 
 const router = express.Router();
 
@@ -18,5 +20,9 @@ router.get("/logout", userLogoutController);
 //admin route
 router.get("/users", authToken, getAllUsersController);
 router.put("/user/:userId/update-role", authToken, updateUserRoleController);
+
+//product
+router.post("/upload-product", authToken, uploadProductController);
+router.get("/products", authToken, getAllProductsController);
 
 module.exports = router;

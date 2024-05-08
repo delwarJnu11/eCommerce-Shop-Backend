@@ -8,6 +8,7 @@ const updateUserRoleController = require("../controller/user/updateUserRole");
 const userRegisterController = require("../controller/user/userRegister");
 const uploadProductController = require("../controller/product/uploadProduct");
 const getAllProductsController = require("../controller/product/getAllProducts");
+const updateProductController = require("../controller/product/updateProduct");
 
 const router = express.Router();
 
@@ -24,5 +25,6 @@ router.put("/user/:userId/update-role", authToken, updateUserRoleController);
 //product
 router.post("/upload-product", authToken, uploadProductController);
 router.get("/products", authToken, getAllProductsController);
+router.put("/product/:id/update", authToken, updateProductController);
 
 module.exports = router;

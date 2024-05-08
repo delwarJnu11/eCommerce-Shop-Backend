@@ -11,13 +11,15 @@ const uploadProductController = async (req, res) => {
     }
     const product = req.body;
     const productToUpload = new Product(product);
-    console.log(productToUpload);
     const savedProduct = await productToUpload.save();
+    const products = await Product.find().sort({ createdAt: -1 });
+
     res.status(201).json({
       message: "product uploaded successfull",
       success: true,
       error: false,
       data: savedProduct,
+      products: products,
     });
   } catch (error) {
     res.status(400).json({

@@ -2,7 +2,7 @@ const Product = require("../../models/productModel");
 
 const getAllProductsController = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort({ createdAt: -1 });
     res.status(200).json({
       message: "products successfully retrieve",
       error: false,

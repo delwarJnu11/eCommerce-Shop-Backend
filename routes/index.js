@@ -9,6 +9,9 @@ const userRegisterController = require("../controller/user/userRegister");
 const uploadProductController = require("../controller/product/uploadProduct");
 const getAllProductsController = require("../controller/product/getAllProducts");
 const updateProductController = require("../controller/product/updateProduct");
+const getAllProductCategoryController = require("../controller/product/getAllProductCategory");
+const getProductsByCategoryController = require("../controller/product/getProductsByCategory");
+const getSingleProductDetailsController = require("../controller/product/getProduct");
 
 const router = express.Router();
 
@@ -26,5 +29,8 @@ router.put("/user/:userId/update-role", authToken, updateUserRoleController);
 router.post("/upload-product", authToken, uploadProductController);
 router.get("/products", authToken, getAllProductsController);
 router.put("/product/:id/update", authToken, updateProductController);
+router.get("/products/categories", getAllProductCategoryController);
+router.get("/products/category/:categoryName", getProductsByCategoryController);
+router.get("/products/:id", getSingleProductDetailsController);
 
 module.exports = router;

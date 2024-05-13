@@ -4,8 +4,8 @@ const authToken = async (req, res, next) => {
   try {
     const token = req?.cookies?.token;
     if (!token) {
-      res.status(401).json({
-        message: "Please Login!",
+      return res.status(401).json({
+        message: "Please Login for this action!",
         error: true,
         success: false,
       });
@@ -20,12 +20,18 @@ const authToken = async (req, res, next) => {
         next();
       });
     }
-  } catch (error) {
-    res.status(500).json({
-      message: "you don't have any access token. please login!",
+  } catch (err) {
+    let errorMessage;
+    if (err.name === "JsonWebTokenError") {
+      errorMessage = "Invalid or expired token";
+    } else {
+      errorMessage = "Internal Server Error";
+    }
+
+    res.status(err.status || 500).json({
+      message: errorMessage,
       error: true,
       success: false,
-      user: {},
     });
   }
 };

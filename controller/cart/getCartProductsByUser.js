@@ -4,7 +4,6 @@ const Cart = require("../../models/cartModel");
 const getCartProductsByUserController = async (req, res) => {
   try {
     const currentUser = req.userId;
-    console.log("get cart product by user: ", currentUser);
     if (!currentUser) {
       return res.status(401).json({
         message: "Please log in to view cart products.",

@@ -15,7 +15,10 @@ const addToCartController = async (req, res) => {
     }
 
     //check product already in the cart or not
-    const isAdd = await Cart.findOne({ productId });
+    const isAdd = await Cart.findOne({
+      productId,
+      userId: new mongoose.Types.ObjectId(sessionUser),
+    });
 
     if (isAdd) {
       return res.json({

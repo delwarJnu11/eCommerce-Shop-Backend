@@ -18,6 +18,8 @@ const updateCartProductController = require("../controller/cart/updateCartProduc
 const deleteCartProductController = require("../controller/cart/deleteCartProduct");
 const getSearchProductsController = require("../controller/product/getSearchProducts");
 const filterProductController = require("../controller/product/filterProductController");
+const orderCreateController = require("../controller/payment/ordercreateController");
+const paymentSuccessController = require("../controller/payment/paymentSuccessController");
 
 const router = express.Router();
 
@@ -50,5 +52,8 @@ router.delete(
   authToken,
   deleteCartProductController
 );
+//payment
+router.post("/order", authToken, orderCreateController);
+router.post("/payment/success/:transactionId", paymentSuccessController);
 
 module.exports = router;

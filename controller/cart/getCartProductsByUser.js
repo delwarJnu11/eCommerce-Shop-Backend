@@ -15,7 +15,9 @@ const getCartProductsByUserController = async (req, res) => {
     // Find all cart products for the user
     const cartProducts = await Cart.find({
       userId: new mongoose.Types.ObjectId(currentUser),
-    }).populate("productId");
+    })
+      .populate("productId")
+      .populate("userId");
 
     // Check if the cart is empty
     if (cartProducts.length === 0) {

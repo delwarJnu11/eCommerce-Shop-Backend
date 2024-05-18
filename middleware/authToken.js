@@ -14,7 +14,11 @@ const authToken = async (req, res, next) => {
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET_KEY, (error, decode) => {
         if (error) {
-          throw new Error("your token has been expired!");
+          return res.status(401).json({
+            message: "your token has been expired!",
+            error: true,
+            success: false,
+          });
         }
         req.userId = decode._id;
         next();

@@ -11,8 +11,17 @@ const is_live = false; //true for live, false for sandbox
 const orderCreateController = async (req, res) => {
   const currentUser = req.userId;
 
-  const { name, email, currency, postalCode, phone, address, cartItemsIds } =
-    req.body;
+  const {
+    name,
+    email,
+    currency,
+    postalCode,
+    phone,
+    address,
+    cartProductDetails,
+  } = req.body;
+
+  console.log(cartProductDetails);
 
   // Find all cart products for the user
   const cartProducts = await Cart.find({
@@ -34,7 +43,7 @@ const orderCreateController = async (req, res) => {
     phone: phone,
     currency: currency,
     postalCode: postalCode,
-    cartItemsIds: cartItemsIds,
+    cartProductDetails: cartProductDetails,
     totalPrice: totalPrice,
     transactionId: transactionId,
     paymentStatus: "pending",
@@ -46,7 +55,7 @@ const orderCreateController = async (req, res) => {
     currency: currency,
     tran_id: transactionId, // use unique tran_id for each api call
     success_url: `http://localhost:8000/api/payment/success/${transactionId}`,
-    fail_url: "http://localhost:3030/fail",
+    fail_url: `http://localhost:8000/api/payment/fail/${transactionId}`,
     cancel_url: "http://localhost:3030/cancel",
     ipn_url: "http://localhost:3030/ipn",
     shipping_method: "Courier",

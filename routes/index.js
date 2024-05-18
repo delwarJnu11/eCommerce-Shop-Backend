@@ -20,6 +20,8 @@ const getSearchProductsController = require("../controller/product/getSearchProd
 const filterProductController = require("../controller/product/filterProductController");
 const orderCreateController = require("../controller/payment/ordercreateController");
 const paymentSuccessController = require("../controller/payment/paymentSuccessController");
+const paymentFailedController = require("../controller/payment/paymentFailed");
+const getAllOrdersController = require("../controller/order/getAllOrders");
 
 const router = express.Router();
 
@@ -55,5 +57,9 @@ router.delete(
 //payment
 router.post("/order", authToken, orderCreateController);
 router.post("/payment/success/:transactionId", paymentSuccessController);
+router.post("/payment/fail/:transactionId", paymentFailedController);
+
+// Orders
+router.get("/orders", authToken, getAllOrdersController);
 
 module.exports = router;

@@ -22,6 +22,8 @@ const orderCreateController = require("../controller/payment/ordercreateControll
 const paymentSuccessController = require("../controller/payment/paymentSuccessController");
 const paymentFailedController = require("../controller/payment/paymentFailed");
 const getAllOrdersController = require("../controller/order/getAllOrders");
+const updateOrderStatusController = require("../controller/order/updateOrderStatus");
+const getOrdersByUserController = require("../controller/order/getOrdersByUser");
 
 const router = express.Router();
 
@@ -61,5 +63,7 @@ router.post("/payment/fail/:transactionId", paymentFailedController);
 
 // Orders
 router.get("/orders", authToken, getAllOrdersController);
+router.put("/order/:orderId/status", authToken, updateOrderStatusController);
+router.get("/orders/user/:email", authToken, getOrdersByUserController);
 
 module.exports = router;

@@ -57,11 +57,54 @@ const orderSchema = mongoose.Schema(
     transactionStatus: {
       type: String,
     },
+    orderStatus: {
+      type: String,
+      enum: [
+        "Pending",
+        "Confirmed",
+        "Dispatched",
+        "In Transit",
+        "Delivered",
+        "Cancelled",
+        "Returned",
+      ],
+      required: true,
+      default: "Pending",
+    },
+    statusHistory: [
+      {
+        status: {
+          type: String,
+          enum: [
+            "Pending",
+            "Confirmed",
+            "Dispatched",
+            "In Transit",
+            "Delivered",
+            "Cancelled",
+            "Returned",
+          ],
+          required: true,
+        },
+        updatedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
+
+// Event listener to update statusHistory
+orderSchema.post("save", (doc) => {
+  if (doc.isModified("orderStatus")) {
+    doc.statusHistory.push({ status: doc.orderStatus, updatedAt: new Date() });
+    doc.save();
+  }
+});
 
 const Order = mongoose.model("Order", orderSchema);
 

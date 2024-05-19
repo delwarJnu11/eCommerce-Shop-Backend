@@ -21,8 +21,6 @@ const orderCreateController = async (req, res) => {
     cartProductDetails,
   } = req.body;
 
-  console.log(cartProductDetails);
-
   // Find all cart products for the user
   const cartProducts = await Cart.find({
     userId: new mongoose.Types.ObjectId(currentUser),
@@ -47,6 +45,13 @@ const orderCreateController = async (req, res) => {
     totalPrice: totalPrice,
     transactionId: transactionId,
     paymentStatus: "pending",
+    orderStatus: "Pending",
+    statusHistory: [
+      {
+        status: "Pending",
+        updatedAt: new Date(),
+      },
+    ],
   };
 
   // payment data

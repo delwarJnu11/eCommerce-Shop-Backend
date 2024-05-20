@@ -24,6 +24,8 @@ const paymentFailedController = require("../controller/payment/paymentFailed");
 const getAllOrdersController = require("../controller/order/getAllOrders");
 const updateOrderStatusController = require("../controller/order/updateOrderStatus");
 const getOrdersByUserController = require("../controller/order/getOrdersByUser");
+const createReviewController = require("../controller/review/postReview");
+const reviewByProductController = require("../controller/review/reviewByProduct");
 
 const router = express.Router();
 
@@ -66,4 +68,7 @@ router.get("/orders", authToken, getAllOrdersController);
 router.put("/order/:orderId/status", authToken, updateOrderStatusController);
 router.get("/orders/user/:email", authToken, getOrdersByUserController);
 
+// Review
+router.post("/products/:productId/review", authToken, createReviewController);
+router.get("/reviews/:productId/review", authToken, reviewByProductController);
 module.exports = router;

@@ -39,7 +39,6 @@ const userLoginController = async (req, res) => {
         path: "/",
       });
 
-      res.cookie("token", token, tokenOption);
       res.status(200).json({
         message: "Login successful",
         token: token,

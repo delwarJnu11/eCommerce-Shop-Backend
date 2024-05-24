@@ -43,6 +43,11 @@ const userLoginController = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
       path: "/",
+      domain:
+        process.env.NODE_ENV === "production"
+          ? process.env.FRONTEND_URL
+          : process.env.DEV_URL,
+      maxAge: 3600000, // 1 hour in milliseconds
     };
 
     res.cookie("token", token, tokenOptions).status(200).json({
@@ -50,6 +55,7 @@ const userLoginController = async (req, res) => {
       success: true,
       error: false,
       data: user,
+      token: token,
     });
   } catch (err) {
     res.status(500).json({

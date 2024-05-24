@@ -21,8 +21,8 @@ app.use((req, res, next) => {
 const corsOptions = {
   origin:
     process.env.NODE_ENV === "production"
-      ? "https://shopee-coral-one.vercel.app"
-      : "http://localhost:5173",
+      ? process.env.FRONTEND_URL
+      : process.env.DEV_URL,
   credentials: true,
 };
 app.use(cors(corsOptions));

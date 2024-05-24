@@ -31,10 +31,13 @@ const userLoginController = async (req, res) => {
         expiresIn: "1h",
       });
 
-      const tokenOption = {
+      res.cookie("token", token, {
         httpOnly: true,
-        secure: true,
-      };
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "None",
+        domain: process.env.FRONTEND_URL,
+        path: "/",
+      });
 
       res.cookie("token", token, tokenOption);
       res.status(200).json({

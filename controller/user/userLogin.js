@@ -42,10 +42,6 @@ const userLoginController = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
-      domain:
-        process.env.NODE_ENV === "production"
-          ? "https://shopee-coral-one.vercel.app"
-          : "http://localhost:5173",
       path: "/",
     };
 

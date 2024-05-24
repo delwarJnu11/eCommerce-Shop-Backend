@@ -13,7 +13,7 @@ const paymentSuccessController = async (req, res) => {
   );
   if (order.modifiedCount > 0) {
     res.redirect(
-      `http://localhost:5173/payment/success/${req.params.transactionId}`
+      `https://shopee-coral-one.vercel.app/payment/success/${req.params.transactionId}`
     );
   } else {
     res.status(400).json({ message: "Payment update failed", error: true });

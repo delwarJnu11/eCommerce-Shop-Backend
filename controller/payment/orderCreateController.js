@@ -59,8 +59,8 @@ const orderCreateController = async (req, res) => {
     total_amount: totalPrice,
     currency: currency,
     tran_id: transactionId, // use unique tran_id for each api call
-    success_url: `http://localhost:8000/api/payment/success/${transactionId}`,
-    fail_url: `http://localhost:8000/api/payment/fail/${transactionId}`,
+    success_url: `https://shopee-backend.vercel.app/api/payment/success/${transactionId}`,
+    fail_url: `https://shopee-backend.vercel.app/api/payment/fail/${transactionId}`,
     cancel_url: "http://localhost:3030/cancel",
     ipn_url: "http://localhost:3030/ipn",
     shipping_method: "Courier",

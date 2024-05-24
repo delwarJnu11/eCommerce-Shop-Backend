@@ -18,11 +18,13 @@ app.use((req, res, next) => {
   next();
 });
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-};
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
+console.log(process.env.FRONTEND_URL);
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api", router);

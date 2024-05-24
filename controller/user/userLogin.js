@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/userModel");
 
 const userLoginController = async (req, res) => {
+  console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
+  console.log("NODE_ENV:", process.env.NODE_ENV);
   try {
     const { email, password } = req.body;
 

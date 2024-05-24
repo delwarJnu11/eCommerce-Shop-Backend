@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/userModel");
 
 const userLoginController = async (req, res) => {
-  console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
-  console.log("NODE_ENV:", process.env.NODE_ENV);
   try {
     const { email, password } = req.body;
 
@@ -33,13 +31,15 @@ const userLoginController = async (req, res) => {
         expiresIn: "1h",
       });
 
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "None",
-        domain: process.env.FRONTEND_URL,
-        path: "/",
-      });
+      if (process.env.NODE_ENV === "production") {
+        res.cookie("token", token, {
+          httpOnly: true,
+          path: "/",
+          secure: true,
+          sameSite: "none",
+          maxAge: 3600000,
+        });
+      }
 
       res.status(200).json({
         message: "Login successful",

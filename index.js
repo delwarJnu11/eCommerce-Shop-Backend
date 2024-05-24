@@ -15,6 +15,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
 
@@ -24,7 +25,7 @@ app.use(
     credentials: true,
   })
 );
-console.log(process.env.FRONTEND_URL);
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api", router);

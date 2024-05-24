@@ -28,6 +28,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api", router);
 
+app.get("/", async (req, res) => {
+  res.json({ message: "server is running" });
+});
+
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log("Server is running at port:", PORT);

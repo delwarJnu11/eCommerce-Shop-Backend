@@ -7,61 +7,51 @@ const userLoginController = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({
-        message: "Email and password are required",
-        success: false,
-        error: true,
-      });
+    if (!email) {
+      throw new Error("Please provide email");
+    }
+    if (!password) {
+      throw new Error("Please provide password");
     }
 
     const user = await User.findOne({ email });
+
     if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-        success: false,
-        error: true,
-      });
+      throw new Error("User not found");
     }
 
-    const isPasswordValid = bcrypt.compareSync(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({
-        message: "Incorrect password",
-        success: false,
-        error: true,
+    const checkPassword = bcrypt.compareSync(password, user.password);
+
+    if (checkPassword) {
+      const tokenData = {
+        _id: user._id,
+        email: user.email,
+      };
+      const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
+        expiresIn: "1h",
       });
+
+      const tokenOption = {
+        httpOnly: true,
+        secure: true,
+      };
+
+      res.cookie("token", token, tokenOption);
+      res.status(200).json({
+        message: "Login successful",
+        token: token,
+        data: user,
+        success: true,
+        error: false,
+      });
+    } else {
+      throw new Error("Please check Password");
     }
-
-    const tokenData = { _id: user._id, email: user.email };
-    const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h",
-    });
-
-    const tokenOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
-      path: "/",
-      domain:
-        process.env.NODE_ENV === "production"
-          ? process.env.FRONTEND_URL
-          : process.env.DEV_URL,
-      maxAge: 3600000, // 1 hour in milliseconds
-    };
-
-    res.cookie("token", token, tokenOptions).status(200).json({
-      message: "Login successful",
-      success: true,
-      error: false,
-      data: user,
-      token: token,
-    });
   } catch (err) {
-    res.status(500).json({
-      message: err.message || "Internal Server Error",
-      success: false,
+    res.status(400).json({
+      message: err.message || err,
       error: true,
+      success: false,
     });
   }
 };

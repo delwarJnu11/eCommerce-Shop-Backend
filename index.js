@@ -19,10 +19,7 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  origin:
-    process.env.NODE_ENV === "production"
-      ? process.env.FRONTEND_URL
-      : process.env.DEV_URL,
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 };
 app.use(cors(corsOptions));

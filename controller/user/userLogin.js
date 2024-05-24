@@ -41,7 +41,12 @@ const userLoginController = async (req, res) => {
     const tokenOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
+      domain:
+        process.env.NODE_ENV === "production"
+          ? "https://shopee-coral-one.vercel.app"
+          : "http://localhost:5173",
+      path: "/",
     };
 
     res.cookie("token", token, tokenOptions).status(200).json({

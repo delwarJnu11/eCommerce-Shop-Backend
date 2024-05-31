@@ -39,6 +39,14 @@ const userLoginController = async (req, res) => {
           sameSite: "none",
           maxAge: 3600000,
         });
+      } else {
+        res.cookie("token", token, {
+          httpOnly: false,
+          path: "/",
+          secure: false,
+          sameSite: "lax",
+          maxAge: 3600000,
+        });
       }
 
       res.status(200).json({

@@ -6,7 +6,7 @@ const paymentFailedController = async (req, res) => {
     const order = await Order.deleteOne({ transactionId });
     if (order.deletedCount) {
       res.redirect(
-        `https://shopee-coral-one.vercel.app/payment/fail/${transactionId}`
+        `https://shopee-liard-mu.vercel.app/payment/fail/${transactionId}`
       );
     } else {
       res.status(400).json({

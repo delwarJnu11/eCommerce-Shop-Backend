@@ -1,16 +1,23 @@
+require("dotenv").config();
+
 const userLogoutController = async (req, res) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       error: false,
-      message: "user logged out successfully.",
+      message: "User logged out successfully.",
       data: [],
     });
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
+    return res.status(500).json({
+      message: error.message || "Internal Server Error",
       success: false,
       error: true,
       data: [],

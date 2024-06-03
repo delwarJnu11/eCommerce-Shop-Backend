@@ -2,7 +2,13 @@ require("dotenv").config();
 
 const userLogoutController = async (req, res) => {
   try {
-    res.clearCookie("token", {
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    });
+    res.clearCookie("refreshToken", {
       httpOnly: true,
       path: "/",
       secure: process.env.NODE_ENV === "production",

@@ -26,17 +26,20 @@ const getOrdersByUserController = require("../controller/order/getOrdersByUser")
 const createReviewController = require("../controller/review/postReview");
 const reviewByProductController = require("../controller/review/reviewByProduct");
 const orderCreateController = require("../controller/payment/orderCreateController");
+const checkAuthTokenController = require("../controller/user/checkAuthToken");
 
 const router = express.Router();
 
 // endpoints
-router.post("/register", userRegisterController);
-router.post("/login", userLoginController);
-router.get("/user-details", authToken, userDetailsController);
-router.get("/logout", userLogoutController);
+router.post("/auth/register", userRegisterController);
+router.post("/auth/login", userLoginController);
+router.get("/auth/user-details", authToken, userDetailsController);
+router.post("/auth/logout", userLogoutController);
+router.get("/user/auth/check", checkAuthTokenController);
 
 //admin route
 router.get("/users", authToken, getAllUsersController);
+router.get("/users/auth/check", authToken, checkAuthTokenController);
 router.put("/user/:userId/update-role", authToken, updateUserRoleController);
 
 //product

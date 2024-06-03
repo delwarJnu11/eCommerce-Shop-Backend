@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const authToken = async (req, res, next) => {
   try {
-    const token = req?.cookies?.token;
+    const token = req?.cookies?.accessToken;
     if (!token) {
       return res.status(401).json({
         message: "Please Login for this action!",
@@ -14,7 +14,7 @@ const authToken = async (req, res, next) => {
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET_KEY, (error, decode) => {
         if (error) {
-          return res.redirect("http://localhost:5173/login");
+          return res.redirect("https://shopee-liard-mu.vercel.app/auth/login");
         }
         req.userId = decode._id;
         next();

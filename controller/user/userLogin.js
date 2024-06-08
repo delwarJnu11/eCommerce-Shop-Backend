@@ -53,7 +53,7 @@ const userLoginController = async (req, res) => {
     });
 
     const refreshToken = jwt.sign(tokenData, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "1d",
     });
 
     const cookieOptions = {
